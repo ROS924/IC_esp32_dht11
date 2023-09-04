@@ -5,9 +5,9 @@ from paho.mqtt import client as mqtt
 from random import randint
 import json
 
-HOST = '192.168.0.6'
 PORT = 1883
-
+with open("mosq.conf") as file:
+    HOST = file.read().split()[-1]
 
 def gen_random_payld() -> bytes|str:
     '''Gera um payload aleatório'''

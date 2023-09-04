@@ -5,9 +5,10 @@ from time import time
 import json
 
 
-HOST = '192.168.0.6'
-PORT = 1883
 DB = DataBase()
+PORT = 1883
+with open("testes/mosq.conf") as file:
+    HOST = file.read().split()[-1]
 
 
 def on_message_padrao(client:mqtt.Client, userdata:Any, message:mqtt.MQTTMessage) -> None:
