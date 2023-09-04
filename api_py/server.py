@@ -27,4 +27,7 @@ client.connect(HOST, port=PORT)
 client.subscribe('/sensorDados', 2)
 
 print("Servidor iniciado!\n")
-client.loop_forever()
+try:
+    client.loop_forever()
+except KeyboardInterrupt:
+    print("Servidor finalizado!")
