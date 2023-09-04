@@ -1,0 +1,4 @@
+testes/publicador.py
+testes/receptor.py
+__pycache__
+database.db
