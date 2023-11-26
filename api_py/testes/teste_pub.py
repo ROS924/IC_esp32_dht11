@@ -14,7 +14,7 @@ def gen_random_payld() -> bytes|str:
 
     temp = randint(-20, 80)
     umid = randint(0, 100)
-    pl = {"temperatura": temp, "umidade": umid, "indiceCalor": temp+randint(-5, 5)}
+    pl = {"Temperatura": temp, "Umidade": umid, "IndiceCalor": temp+randint(-5, 5)}
 
     return json.dumps(pl)
 

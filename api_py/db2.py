@@ -5,13 +5,13 @@ import sqlite3 as sql
 
 class DataBase:
     def __init__(self, path:str=""):
-        self._db = sql.connect(Path(path, 'database.db').as_posix(), detect_types=True)
+        self._db = sql.connect(Path(path, 'bancoDados.db').as_posix(), detect_types=True)
         self._cur = self._db.cursor()
 
         try:
             self._cur.execute("SELECT * FROM METEOROLOGIA")
         except sql.OperationalError:
-            self._cur.execute("CREATE TABLE METEOROLOGIA (Data BIGINT, Temperatura FLOAT, Umidade FLOAT, IndiceCalor FLOAT)")
+            self._cur.execute("CREATE TABLE METEOROLOGIA (Data BIGINT, Temperatura FLOAT, Umidade FLOAT, IndiceCalor FLOAT, MudancaTemp BIT, MudancaUmi BIT, MudancaSen BIT)")
         finally:
             self._cur.fetchall()
     
@@ -19,17 +19,17 @@ class DataBase:
         self._cur.close()
         self._db.close()
         
-    def adic_dado(self, data:int|float|datetime, temperatura:float, umidade:float, indice_calor:float) -> None:
+    def adic_dado(self, data:int|float|datetime, temperatura:float, umidade:float, indice_calor:float, mudancaTemp:bool, mudancaUmi:bool, mudancaSen:bool) -> None:
         if isinstance(data, datetime):
             data = int(data.timestamp())
         elif isinstance(data, float):
             data = int(data)
 
-        self._cur.execute("INSERT INTO METEOROLOGIA VALUES (?, ?, ?, ?)", (data, temperatura, umidade, indice_calor))
+        self._cur.execute("INSERT INTO METEOROLOGIA VALUES (?, ?, ?, ?, ?, ?, ?)", (data, temperatura, umidade, indice_calor, mudancaTemp, mudancaUmi, mudancaSen))
         self._cur.fetchone()
         self._db.commit()
     
-    def obter_dados(self, de:int|datetime|None=None, ate:int|datetime|None=None) -> Iterator[tuple[datetime, float, float, float]]:
+    def obter_dados(self, de:int|datetime|None=None, ate:int|datetime|None=None) -> Iterator[tuple[datetime, float, float, float, bool, bool, bool]]:
         dcond = ""
         acond = ""
 
@@ -54,15 +54,15 @@ class DataBase:
 
         self._cur.execute("SELECT * FROM METEOROLOGIA"+cond)
 
-        return map(lambda i: (datetime.fromtimestamp(i[0]), i[1], i[2], i[3]), self._cur.fetchall())
+        return map(lambda i: (datetime.fromtimestamp(i[0]), i[1], i[2], i[3],i[4], i[5], i[6]), self._cur.fetchall())
     
     def imprimir_dados(self, de:int|datetime|None=None, ate:int|datetime|None=None) -> None:
-        head = "{}Dia e Hora{}Temperatura{}Umidade{}Sens. Term.{}Mudanca".format(*(' '*i for i in (5, 9, 3, 3)))
+        head = "{}Dia e Hora{}Temperatura{}Umidade{}Sens. Term.{}Mudanca Temp.{}Mudanca Umi.{}Mudanca Sen.".format(*(' '*i for i in (5, 9, 3, 3, 1, 1, 1)))
         print(head, '\n'+'-'*len(head))
         
-        for d, t, u, s, m in self.obter_dados(de, ate):
+        for d, t, u, s, mt, mu, ms in self.obter_dados(de, ate):
             data_str = f"{d.day:02d}/{d.month:02d}/{d.year:02d} - {d.hour:02d}:{d.minute:02d}:{d.second:02d}"
-            print(f"{data_str}    {t:6.2f} °C     {u:5.2f}%    {s:6.2f} °C")
+            print(f"{data_str}    {t:6.2f} °C     {u:5.2f}%    {s:6.2f} °C  {mt:1}  {mu:1}  {ms:1}")
 
 
 if __name__ == "__main__":
