@@ -7,10 +7,11 @@ import json
 
 
 DB = DataBase()
-PORT = 1883
-#with open("testes/mosq.conf") as file:
-#    HOST = file.read().split()[-1]
-HOST = sp.Popen(['hostname', '-I'], stdout=sp.PIPE).communicate()[0].decode('utf-8').strip()
+with open("testes/mosq.conf") as file:
+    r = file.read().split()
+    HOST = r[-1]
+    PORT = int(r[-2])
+
 
 def on_message_padrao(client:mqtt.Client, userdata:Any, message:mqtt.MQTTMessage) -> None:
     data = time()
