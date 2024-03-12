@@ -1,0 +1,9 @@
+Adwin	KEYWORD1
+update	KEYWORD2
+insertElement	KEYWORD2
+compressBuckets	KEYWORD2
+deleteElement	KEYWORD2
+checkDrift	KEYWORD2
+cutExpression	KEYWORD2
+getEstimation	KEYWORD2
+print	KEYWORD2
