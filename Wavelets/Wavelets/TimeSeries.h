@@ -22,10 +22,10 @@ class TimeSeries{
 
 
         // métodos gerais
-        void calcMean();
-        void calcVariance();
-        void calcStdev();
-        void calcMedian();
+        void calcMean(list<double> observations);
+        void calcVariance(list<double> observations, double mean);
+        void calcStdev(double variance);
+        void calcMedian(list<double> elements);
         void basicStat();
         void addElement(double elements);
         void copyElementList(list<double> elements);
@@ -42,5 +42,6 @@ class TimeSeries{
         double stdev;
         double variance;
         double median;
+        list<double> elements;
 
 };

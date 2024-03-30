@@ -1,6 +1,9 @@
 #include <iostream>
 #include "TimeSeries.h"
 #include "StatisticalMethods.h"
+#include <math.h>
+#include <algorithm>
+#include "../../../../msys64/ucrt64/include/c++/13.2.0/bits/algorithmfwd.h"
 using namespace std;
 
 TimeSeries::TimeSeries(){
@@ -10,6 +13,7 @@ TimeSeries::TimeSeries(){
     double stdev;
     double variance;
     double median;
+    list<double> elements;
 }
 
 StatisticalMethods::StatisticalMethods(){}
@@ -57,27 +61,103 @@ void TimeSeries::setMedian(double median) {
 }
 
 
-void TimeSeries::calcMean(){
-	this->mean = StatisticalMethods.calcMean(this->observations); 
+void TimeSeries::calcMean(list<double> observations){
+    double sum =0;
+
+    for(double element : observations){
+        sum += element;
+    }
+
+    double mean;
+
+    mean = sum / observations.size();
+
+	this->mean = mean; 
 }
 	
-void TimeSeries::calcVariance(){
-    this->variance = StatisticalMethods.calcVariance(this->observations, this->mean);
+void TimeSeries::calcVariance(list<double> observations, double mean){
+
+    double sum = 0;
+
+    for(double element : observations){
+        sum  += pow((element - mean), 2);
+    }
+
+    double variance;
+
+    variance = sum / observations.size();
+
+    this->variance = variance;
 }
 
-void TimeSeries::calcStdev(){
-    this->stdev = StatisticalMethods.calcStdev(this->variance);		
+void TimeSeries::calcStdev(double variance){
+
+    double stdev;
+
+    stdev = sqrt(variance);
+
+    this->stdev = stdev;		
 }
 
-void TimeSeries::calcMedian(){
-    this->median = StatisticalMethods.calcMedian(this->observations);		
+void TimeSeries::calcMedian(list<double> elements){
+
+    list<double> observations;
+    int mean;
+    double median;
+
+    observations = elements;
+
+    mean = ceil(observations.size()/2);
+
+    sort(observations.begin(),observations.end());
+
+    if((observations.size()%2) != 0 ){
+
+        int i = 0;
+
+        for(double element : observations){
+
+            if(i == mean){
+                median = element;
+                break;
+            }
+        }
+
+        this->median = median;
+    }
+    else{
+
+        double element1, element2;
+
+        for(double element : observations){
+
+            int i = 0;           
+
+            if(i == (mean-1)){
+                element1 = element;
+            }
+
+            if(i == mean){
+                element2 = element;
+                break;              
+            }
+        }
+
+
+        median = (element1 + element2) / 2;
+
+        this->median = median;
+
+    }
+
+     		
 }
 
 void TimeSeries::basicStat(){
-    this->calcMean();
-    this->calcVariance();
-    this->calcStdev();
-    this->calcMedian();
+    this->calcMean(observations);
+    this->calcVariance(observations, mean);
+    this->calcStdev(variance);
+    this->calcMedian(elements);
 }
 
 void TimeSeries::addElement(double element){
