@@ -1,0 +1,8 @@
+Wavelet	KEYWORD1
+decompose	KEYWORD2
+copyDataToCoeficientArray	KEYWORD2
+decomposeOneLevel	KEYWORD2
+getCoefficient	KEYWORD2
+getDataCount	KEYWORD2
+getLevelCount	KEYWORD2
+getOffset	KEYWORD2
