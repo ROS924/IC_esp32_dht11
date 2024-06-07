@@ -1,7 +1,0 @@
-WaveletLevel	KEYWORD1
-getCoefficients	KEYWORD2
-setCoefficients	KEYWORD2
-getDetails	KEYWORD2
-setDetails	KEYWORD2
-addCoefficients	KEYWORD2
-addDetail	KEYWORD2
