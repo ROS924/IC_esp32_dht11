@@ -252,5 +252,23 @@ void Adwin::print() const
   } while (it != NULL);
 }
 
+double* Adwin::getWindow(){
+  
+  ListNode* window;
+
+  window = bucketList.head;
+  
+  int tam = window->size;
+
+  double valores[tam];
+
+  for(int i = 0; i<tam; i++){
+    valores[i] = window->sum[i];
+  }
+
+  return valores;
+
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
