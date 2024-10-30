@@ -29,6 +29,8 @@ static int bucketSize(int Row)
 {
   return (int) pow(2,Row);
 }
+
+static ListNode* wind;
    
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -51,6 +53,7 @@ Adwin::Adwin(int M):MINTCLOCK(1),MINLENGTHWINDOW(16),DELTA(.01),MAXBUCKETS(M),bu
 bool Adwin::update(const double &value)
 {
   insertElement(value);
+  wind = bucketList.head;
   compressBuckets();  
   return checkDrift();
 }
@@ -250,6 +253,24 @@ void Adwin::print() const
     printf("\n");
     it = it->prev;i--;
   } while (it != NULL);
+}
+
+double* Adwin::getWindow(){
+  
+  ListNode* window;
+
+  window = wind;
+  
+  int tam = window->size;
+
+  double valores[tam];
+
+  for(int i = 0; i<tam; i++){
+    valores[i] = window->sum[i];
+  }
+
+  return valores;
+
 }
 
 

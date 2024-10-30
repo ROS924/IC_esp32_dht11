@@ -1,0 +1,7 @@
+DwtHaar	KEYWORD1
+fazerMatrizTransf	KEYWORD2
+multiplyMatrixVector	KEYWORD2
+executar	KEYWORD2
+getTamSaida	KEYWORD2
+getSaida	KEYWORD2
+inserirValor	KEYWORD2

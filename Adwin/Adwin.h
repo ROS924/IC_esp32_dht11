@@ -31,6 +31,7 @@ class Adwin  {
   bool update(const double &value);
   void print() const;
   int length() const { return W; }
+  double* getWindow();
 
  private:
 
