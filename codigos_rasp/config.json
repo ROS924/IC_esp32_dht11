@@ -1,0 +1,11 @@
+{
+    "base_dir": "/home/rodrigo/Ropositórios/IC_esp32_dht11/codigos_rasp",
+    "sensor_id": 0,
+    "mqtt": {
+        "enabled": true,
+        "broker_uri": "homeassistant.local",
+        "port": 1883,
+	    "username": "user",
+    	"password": "user123"
+    }
+}
